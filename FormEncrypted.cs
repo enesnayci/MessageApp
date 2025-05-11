@@ -20,9 +20,21 @@ namespace MesajlasmaProjesi
 
             foreach (var item in MessageManager.GetMessages())
             {
-                string encrypted = Encryption.VigenereEncrypt(item.Mesaj.ToUpper(), key.ToUpper());
+                string encrypted = Encryption.AESEncrypt(item.Mesaj);
                 dataGridView1.Rows.Add(item.ID, item.Tarih.ToString(), encrypted);
             }
         }
+        public void UpdateDataGridView()
+        {
+            dataGridView1.Rows.Clear();
+            string key = "KEY";
+
+            foreach (var item in MessageManager.GetMessages())
+            {
+                string encrypted = Encryption.AESEncrypt(item.Mesaj);
+                dataGridView1.Rows.Add(item.ID, item.Tarih.ToString(), encrypted);
+            }
+        }
+
     }
 }

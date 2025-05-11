@@ -8,22 +8,19 @@ namespace MesajlasmaProjesi
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new FormA());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-            // Formları oluştur
-            FormA formA = new FormA();
-            FormB formB = new FormB();
             FormEncrypted formEncrypted = new FormEncrypted();
+            FormA formA = new FormA(formEncrypted);
+            FormB formB = new FormB(formA, formEncrypted);
+            formA.SetFormB(formB);
 
-            // Tüm formları göster
             formA.Show();
             formB.Show();
             formEncrypted.Show();
 
-            // Ana form olarak birini çalıştır (diğerleri zaten gösterilmiş)
-            Application.Run();
+            Application.Run(formA);
         }
     }
 }

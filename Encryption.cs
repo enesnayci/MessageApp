@@ -1,30 +1,45 @@
+using System;
+using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace MesajlasmaProjesi
 {
     public static class Encryption
     {
-        public static string VigenereEncrypt(string text, string key)
-        {
-            StringBuilder result = new StringBuilder();
-            int keyIndex = 0;
+        private static readonly string aesKey = "1234567890qwerty"; // 16 karakter = 128 bit
+        private static readonly string aesIV = "0123456789asdfgh";   // 16 karakter
 
-            foreach (char ch in text)
+        public static string AESEncrypt(string plainText)
+        {
+            using Aes aes = Aes.Create();
+            aes.Key = Encoding.UTF8.GetBytes(aesKey);
+            aes.IV = Encoding.UTF8.GetBytes(aesIV);
+
+            using MemoryStream ms = new MemoryStream();
+            using CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write);
+            using (StreamWriter sw = new StreamWriter(cs))
             {
-                if (char.IsLetter(ch))
-                {
-                    char baseChar = char.IsUpper(ch) ? 'A' : 'a';
-                    int offset = (ch - baseChar + key[keyIndex % key.Length] - 'A') % 26;
-                    result.Append((char)(baseChar + offset));
-                    keyIndex++;
-                }
-                else
-                {
-                    result.Append(ch);
-                }
+                sw.Write(plainText);
             }
 
-            return result.ToString();
+            return Convert.ToBase64String(ms.ToArray());
+        }
+
+        public static string AESDecrypt(string encryptedText)
+        {
+            using Aes aes = Aes.Create();
+            aes.Key = Encoding.UTF8.GetBytes(aesKey);
+            aes.IV = Encoding.UTF8.GetBytes(aesIV);
+
+            byte[] buffer = Convert.FromBase64String(encryptedText);
+
+            using MemoryStream ms = new MemoryStream(buffer);
+            using CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read);
+            using StreamReader sr = new StreamReader(cs);
+            {
+                return sr.ReadToEnd();
+            }
         }
     }
 }
