@@ -7,7 +7,7 @@ namespace MesajlasmaProjesi
 {
     public static class Encryption
     {
-        private static readonly string aesKey = "1234567890qwerty"; // 16 karakter = 128 bit
+        private static readonly string aesKey = "1234567890qwerty"; // 16 karakter
         private static readonly string aesIV = "0123456789asdfgh";   // 16 karakter
 
         public static string AESEncrypt(string plainText)

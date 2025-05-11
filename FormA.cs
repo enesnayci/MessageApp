@@ -5,7 +5,7 @@ namespace MesajlasmaProjesi
 {
     public partial class FormA : Form
     {
-        private FormB formB;  // FormB'nin referansı
+        private FormB formB;  
         private FormEncrypted formEncrypted;
 
         public FormA(FormEncrypted encryptedForm)
@@ -20,7 +20,7 @@ namespace MesajlasmaProjesi
         private void btnGonder_Click(object sender, EventArgs e)
         {
             string mesaj = txtMesaj.Text;
-            MessageManager.AddMessage(mesaj);  // Mesajı ekliyoruz
+            MessageManager.AddMessage(mesaj);
 
             dataGridView1.Rows.Add(dataGridView1.Rows.Count + 1, DateTime.Now.ToString(), mesaj);
             // FormB'yi de güncellemeyi sağlıyoruz

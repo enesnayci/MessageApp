@@ -11,7 +11,7 @@ namespace MesajlasmaProjesi
         public FormB(FormA formAReference, FormEncrypted formEncrypted)
         {
             InitializeComponent();
-            formA = formAReference;  // FormA referansını al
+            formA = formAReference;
             this.formEncrypted = formEncrypted;
         }
 
@@ -19,9 +19,9 @@ namespace MesajlasmaProjesi
         // DataGridView'i güncelleme
         public void UpdateDataGridView()
         {
-            dataGridView1.Rows.Clear();  // DataGridView'i temizle
+            dataGridView1.Rows.Clear();
 
-            var messages = MessageManager.GetMessages();  // Mesajları al
+            var messages = MessageManager.GetMessages();
 
             // Mesajları DataGridView'e ekle
             foreach (var message in messages)
@@ -36,17 +36,17 @@ namespace MesajlasmaProjesi
             dataGridView1.Columns.Add("Tarih", "Tarih");
             dataGridView1.Columns.Add("Mesaj", "Mesaj");
 
-            UpdateDataGridView();  // Başlangıçta mesajları yükle
+            UpdateDataGridView();
         }
 
         private void btnGonder_Click(object sender, EventArgs e)
         {
             string mesaj = txtMesaj.Text;
-            MessageManager.AddMessage(mesaj);  // Mesajı ekle
+            MessageManager.AddMessage(mesaj);
 
             // DataGridView'i güncelle
-            UpdateDataGridView();  // FormB'yi güncelle
-            formA.UpdateDataGridView();  // FormA'yı da güncelle
+            UpdateDataGridView();
+            formA.UpdateDataGridView();
             formEncrypted.UpdateDataGridView();
             txtMesaj.Clear();
         }
